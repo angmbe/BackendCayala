@@ -21,13 +21,12 @@ def get_customer_by_id(request, id):
     return Response(serializer.data)
 
 @api_view(['GET'])
-def get_customer_by_nit(request):
-    nit = request.query_params.get('nit')
-    if nit:
-        customers = Customer.objects.filter(nit=nit)
+def get_customer_by_nit(request, nit):
+    customers = Customer.objects.filter(nit=nit)
+    if customers.exists():
         serializer = CustomerSerializer(customers, many=True)
         return Response(serializer.data)
-    return Response({'error': 'Parámetro "nit" es requerido'}, status=status.HTTP_400_BAD_REQUEST)
+    return Response({'error': 'No se encontró cliente con ese NIT'}, status=404)
 
 @api_view(['POST'])
 def update_customer(request, id):
