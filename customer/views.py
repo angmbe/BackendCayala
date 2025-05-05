@@ -20,6 +20,15 @@ def get_customer_by_id(request, id):
     serializer = CustomerSerializer(customer)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def get_customer_by_nit(request):
+    nit = request.query_params.get('nit')
+    if nit:
+        customers = Customer.objects.filter(nit=nit)
+        serializer = CustomerSerializer(customers, many=True)
+        return Response(serializer.data)
+    return Response({'error': 'Parámetro "nit" es requerido'}, status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['POST'])
 def update_customer(request, id):
     try:
