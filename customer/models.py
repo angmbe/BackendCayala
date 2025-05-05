@@ -1,0 +1,39 @@
+from django.db import models
+
+class Customer(models.Model):
+    id = models.CharField(primary_key=True, max_length=50)
+    firstname = models.CharField(max_length=255, null=True)
+    lastname = models.CharField(max_length=255, null=True)
+    email = models.CharField(max_length=255, null=True)
+    deal_id = models.CharField(max_length=50, null=True)
+    address = models.CharField(max_length=255, null=True)
+    streetName = models.CharField(max_length=255, null=True)
+    streetNumber = models.CharField(max_length=10, null=True)
+    districtName = models.CharField(max_length=100, null=True)
+    residency = models.CharField(max_length=100, null=True)
+    zipCode = models.CharField(max_length=100, null=True)
+    zip = models.CharField(max_length=255, null=True)
+    nit = models.CharField(max_length=255, null=True)
+    gender = models.CharField(max_length=255, null=True)
+    pais_nacimiento = models.CharField(max_length=255, null=True)
+    phone = models.CharField(max_length=255, null=True)
+    canal = models.CharField(max_length=255, null=True)
+    industry = models.CharField(max_length=255, null=True)
+    date_of_birth = models.CharField(max_length=255, null=True)
+    nacionalidad_c = models.CharField(max_length=255, null=True)
+    organizacion_de_ventas = models.CharField(max_length=255, null=True)
+    vecindad = models.CharField(max_length=255, null=True)
+    rango_de_ingresos_mensuales = models.CharField(max_length=255, null=True)
+    fuente_de_ingreso = models.CharField(max_length=255, null=True)
+    cantidad_de_personas_dependientes = models.CharField(max_length=255, null=True)
+    tipo_mascota = models.CharField(max_length=255, null=True)
+    pasaporte_c = models.CharField(max_length=255, null=True)
+    profesion_representante_c = models.CharField(max_length=255, null=True)
+    direccion_para_notificaciones = models.CharField(max_length=255, null=True)
+    numero_de_bp = models.CharField(max_length=255, null=True)
+    create_at = models.DateTimeField(null=True)
+    status_update = models.BooleanField(null=True)
+
+    class Meta:
+        db_table = 'Customer'
+        managed = False
