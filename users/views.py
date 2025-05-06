@@ -44,7 +44,8 @@ class LoginUserView(APIView):
             return Response({
                 "fullname": user.fullname,
                 "profileID": user.profile.profileid,
-                "profileName": user.profile.profilename
+                "profileName": user.profile.profilename,
+                "id" : user.customer_id
             })
         else:
             return Response({"error": "Invalid username or password"}, status=400)
