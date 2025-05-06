@@ -2,6 +2,7 @@ from django.db import models
 
 class Customer(models.Model):
     id = models.CharField(primary_key=True, max_length=50)
+    type = models.CharField(max_length=100, null=True)
     firstname = models.CharField(max_length=255, null=True)
     lastname = models.CharField(max_length=255, null=True)
     email = models.CharField(max_length=255, null=True)
