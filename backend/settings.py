@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -43,7 +44,8 @@ INSTALLED_APPS = [
     'listitems',
     'customer',
     'customerprice',
-    'users'
+    'users',
+    'customerlegal'
 ]
 
 MIDDLEWARE = [
@@ -119,6 +121,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+#Uploads
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
+MEDIA_URL = '/media/'
+
+CUSTOMER_FILES_DIR = os.path.join(MEDIA_ROOT, 'customer_documents')
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
