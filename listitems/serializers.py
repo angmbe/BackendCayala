@@ -4,4 +4,4 @@ from .models import ListOfItemValue
 class ListOfItemValueSerializer(serializers.ModelSerializer):
     class Meta:
         model = ListOfItemValue
-        fields = ['itemValue', 'descriptionValue']
+        fields = ['valueID', 'descriptionValue','icon']

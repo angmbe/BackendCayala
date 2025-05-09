@@ -20,13 +20,23 @@ def get_customer_by_id(request, id):
     serializer = CustomerSerializer(customer)
     return Response(serializer.data)
 
+# @api_view(['GET'])
+# def get_customer_by_nit(request, nit):
+#     customers = Customer.objects.filter(nit=nit)
+#     if customers.exists():
+#         serializer = CustomerSerializer(customers, many=True)
+#         return Response(serializer.data)
+#     return Response({'error': 'No se encontró cliente con ese NIT'}, status=404)
+
 @api_view(['GET'])
 def get_customer_by_nit(request, nit):
-    customers = Customer.objects.filter(nit=nit)
-    if customers.exists():
-        serializer = CustomerSerializer(customers, many=True)
-        return Response(serializer.data)
-    return Response({'error': 'No se encontró cliente con ese NIT'}, status=404)
+    try:
+        customer = Customer.objects.get(nit=nit)
+    except Customer.DoesNotExist:
+        return Response({'error': 'Customer not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = CustomerSerializer(customer)
+    return Response(serializer.data)
 
 @api_view(['POST'])
 def update_customer(request, id):

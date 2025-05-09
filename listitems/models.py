@@ -6,6 +6,7 @@ class ListOfItemValue(models.Model):
     descriptionValue = models.CharField(max_length=100)
     itemValue = models.CharField(max_length=20)
     hsValue = models.CharField(max_length=50)
+    icon = models.CharField(max_length=50)
     created_by = models.IntegerField()
     created_at = models.DateTimeField()
     updated_by = models.IntegerField()
