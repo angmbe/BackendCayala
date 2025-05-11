@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import CustomerLegal
 from .serializers import CustomerLegalSerializer
+from django.utils import timezone
 
 @api_view(['POST'])
 def upload_document(request):
@@ -30,7 +31,7 @@ def upload_document(request):
             documentID=documentID,
             expiredDate=expiredDate,
             fileName=file_name,
-            status=True,
+            status=False,
             created_by=created_by,
         )
 
@@ -63,6 +64,29 @@ def get_document_base64(request):
     except Exception as e:
         return Response({'error': str(e)}, status=400)
 
+@api_view(['POST'])
+def approved_document(request):
+    print("✅ Entró al método approved_document")
+    try:
+        legalID = request.data['legalID']
+
+        if not legalID:
+            return Response({'error': 'legalID es requerido'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            document = CustomerLegal.objects.get(legalID=legalID)
+        except CustomerLegal.DoesNotExist:
+            return Response({'error': 'Documento no encontrado'}, status=status.HTTP_404_NOT_FOUND)
+
+        document.status = True
+        document.updated_at = timezone.now()
+        document.save()
+
+        return Response({'message': 'Documento actualizado correctamente'}, status=status.HTTP_200_OK)
+
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET'])
 def get_documents_by_customer(request, customerID):
@@ -72,3 +96,10 @@ def get_documents_by_customer(request, customerID):
         return Response(serializer.data, status=200)
     except Exception as e:
         return Response({'error': str(e)}, status=400)
+
+@api_view(['POST'])
+def test_post(request):
+    print("✅ Entró al método test_post")
+    return Response({"message": "POST recibido correctamente"})
+
+

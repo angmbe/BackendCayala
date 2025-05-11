@@ -38,12 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
     'corsheaders',
     'rest_framework',
     'documentos',
     'listitems',
     'customer',
     'customerprice',
+    'customerpayment',
     'users',
     'customerlegal'
 ]
@@ -126,6 +128,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 MEDIA_URL = '/media/'
 
 CUSTOMER_FILES_DIR = os.path.join(MEDIA_ROOT, 'customer_documents')
+CUSTOMER_PAYMENT_FILES_DIR = os.path.join(BASE_DIR, 'payment_files')
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
