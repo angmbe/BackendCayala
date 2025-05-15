@@ -3,6 +3,7 @@ from django.db import models
 
 class VwCustomerPrice(models.Model):
     fid = models.IntegerField(primary_key=True)
+    cotizacionID = models.IntegerField(null=True, blank=True)
     customer = models.CharField(max_length=50)
     tipoPersona = models.CharField(max_length=255, null=True)
     empresaID = models.CharField(max_length=50, null=True)
