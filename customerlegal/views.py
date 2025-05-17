@@ -11,6 +11,7 @@ from django.utils import timezone
 def upload_document(request):
     try:
         customerID = request.data['customerID']
+        cotizacionID = request.data['cotizacionID']
         documentID = request.data['documentID']
         expiredDate = request.data['expiredDate']
         file = request.FILES['file']
@@ -28,6 +29,7 @@ def upload_document(request):
 
         record = CustomerLegal.objects.create(
             customerID=customerID,
+            cotizacionID = cotizacionID,
             documentID=documentID,
             expiredDate=expiredDate,
             fileName=file_name,
@@ -97,9 +99,6 @@ def get_documents_by_customer(request, customerID):
     except Exception as e:
         return Response({'error': str(e)}, status=400)
 
-@api_view(['POST'])
-def test_post(request):
-    print("✅ Entró al método test_post")
-    return Response({"message": "POST recibido correctamente"})
+
 
 

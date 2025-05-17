@@ -3,6 +3,7 @@ from django.db import models
 class CustomerLegal(models.Model):
     legalID = models.AutoField(primary_key=True)
     customerID = models.CharField(max_length=50)
+    cotizacionID = models.IntegerField()
     documentID = models.IntegerField()
     expiredDate = models.DateTimeField()
     fileName = models.TextField()
