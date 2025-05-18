@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'documentos',
     'listitems',
+    'company',
     'customer',
     'customerprice',
     'customerpayment',
