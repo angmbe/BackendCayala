@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'customerprice',
     'customerpayment',
     'users',
-    'customerlegal'
+    'customerlegal',
+    'customerauthorization'
 ]
 
 MIDDLEWARE = [
@@ -130,6 +131,7 @@ MEDIA_URL = '/media/'
 
 CUSTOMER_FILES_DIR = os.path.join(MEDIA_ROOT, 'customer_documents')
 CUSTOMER_PAYMENT_FILES_DIR = os.path.join(BASE_DIR, 'payment_files')
+CUSTOMER_AUTORIZACIONES_DIR = os.path.join(MEDIA_ROOT, 'customer_autorizaciones')
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
