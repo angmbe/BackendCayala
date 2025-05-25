@@ -17,6 +17,7 @@ class Customer(models.Model):
     nit = models.CharField(max_length=255, null=True)
     gender = models.CharField(max_length=255, null=True)
     pais_nacimiento = models.CharField(max_length=255, null=True)
+    prefix = models.CharField(max_length=5, null=True)
     phone = models.CharField(max_length=255, null=True)
     canal = models.CharField(max_length=255, null=True)
     industry = models.CharField(max_length=255, null=True)

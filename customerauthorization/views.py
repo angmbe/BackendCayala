@@ -24,6 +24,44 @@ def generate_pdf_from_html(context, filename):
 
     return filepath if not pisa_status.err else None
 
+# @api_view(['POST'])
+# def generar_autorizacion_pdf(request):
+#     customerID = request.data.get('customerID')
+#     cotizacionID = request.data.get('cotizacionID')
+#     created_by = request.data.get('created_by', 0)
+
+#     if not customerID or not cotizacionID:
+#         return Response({'error': 'Faltan parámetros requeridos'}, status=status.HTTP_400_BAD_REQUEST)
+
+#     timestamp = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+#     filename = f"Auth_{customerID}_{timestamp}.pdf"
+
+#     context = {
+#         'customerID': customerID,
+#         'cotizacionID': cotizacionID,
+#         'fecha': now().strftime('%d/%m/%Y %H:%M:%S')
+#     }
+
+#     pdf_path = generate_pdf_from_html(context, filename)
+#     if not pdf_path:
+#         return Response({'error': 'No se pudo generar el PDF'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+#     with open(pdf_path, "rb") as pdf_file:
+#         pdf_base64 = base64.b64encode(pdf_file.read()).decode('utf-8')
+
+#     auth = CustomerAuthorization.objects.create(
+#         customerID=customerID,
+#         cotizacionID=cotizacionID,
+#         fileName=filename,
+#         created_by=created_by,
+#         created_at=now()
+#     )
+
+#     return Response({
+#         'fileName': filename,
+#         'base64': pdf_base64
+#     }, status=status.HTTP_201_CREATED)
+
 @api_view(['POST'])
 def generar_autorizacion_pdf(request):
     customerID = request.data.get('customerID')
@@ -33,6 +71,23 @@ def generar_autorizacion_pdf(request):
     if not customerID or not cotizacionID:
         return Response({'error': 'Faltan parámetros requeridos'}, status=status.HTTP_400_BAD_REQUEST)
 
+    # Buscar si ya existe un registro
+    existing = CustomerAuthorization.objects.filter(customerID=customerID, cotizacionID=cotizacionID).first()
+
+    if existing:
+        pdf_path = os.path.join(settings.CUSTOMER_AUTORIZACIONES_DIR, existing.fileName)
+        if not os.path.exists(pdf_path):
+            return Response({'error': 'El archivo registrado no existe en disco'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+        with open(pdf_path, "rb") as pdf_file:
+            pdf_base64 = base64.b64encode(pdf_file.read()).decode('utf-8')
+
+        return Response({
+            'fileName': existing.fileName,
+            'base64': pdf_base64
+        }, status=status.HTTP_200_OK)
+
+    # No existe, generamos el archivo PDF
     timestamp = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
     filename = f"Auth_{customerID}_{timestamp}.pdf"
 
@@ -49,7 +104,8 @@ def generar_autorizacion_pdf(request):
     with open(pdf_path, "rb") as pdf_file:
         pdf_base64 = base64.b64encode(pdf_file.read()).decode('utf-8')
 
-    auth = CustomerAuthorization.objects.create(
+    # Guardar en base de datos
+    CustomerAuthorization.objects.create(
         customerID=customerID,
         cotizacionID=cotizacionID,
         fileName=filename,
@@ -61,6 +117,8 @@ def generar_autorizacion_pdf(request):
         'fileName': filename,
         'base64': pdf_base64
     }, status=status.HTTP_201_CREATED)
+
+
 
 @api_view(['POST'])
 def actualizar_autorizacion(request):

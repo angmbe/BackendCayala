@@ -19,8 +19,11 @@ class VwCustomerPrice(models.Model):
     nombre_bodega = models.CharField(max_length=255, null=True)
     balcon = models.CharField(max_length=50, null=True)
     reserva = models.DecimalField(max_digits=18, decimal_places=2, null=True)
+    percent_enganche = models.DecimalField(max_digits=18, decimal_places=2, null=True)
+    enganche = models.DecimalField(max_digits=18, decimal_places=2, null=True)
     total = models.DecimalField(max_digits=18, decimal_places=2, null=True)
     estadoInventario = models.CharField(max_length=255, null=True)
+    progress = models.CharField(max_length=50, null=True)
 
     class Meta:
         managed = False  # Importante: es una vista, no una tabla real
